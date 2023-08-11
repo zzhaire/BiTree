@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/header.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/left_area.css" rel="stylesheet">
+    <link href="css/map.css" rel="stylesheet">
+    <link href="css/bottom.css" rel="stylesheet">
+    <link href="" rel="stylesheet">
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <header id="header">
+        <div id="logo_area">
+            <img alt="logo.png" src="images/logo.png" id="logo">
+            <span id="header_word">二叉树图形演示</span>
+        </div>
+    </header>
+    <div id="main">
+        <!--  左侧功能区域  -->
+        <section id="left_area">
+            <!--  功能栏   -->
+            <nav class="fun_nav clearfix">
+                <ul>
+                    <li :class="{'now_use':act === 0}" @click="switch_board(0)">更改树</li>
+                    <li :class="{'now_use':act === 1}" @click="switch_board(1)">遍历树</li>
+                </ul>
+            </nav>
+            <div class="fun_area">
+                <div class="change_tree" v-if="act===0">
+                    <!--增加结点操作-->
+                    <div>
+                        <span>添加结点 </span>
+                        <input type="text" placeholder="请输入父节点编号a-z" v-model="father_node_name">
+                        <input type="text" placeholder="请输入新结点编号a-z" v-model="new_node_name">
+
+                        <button style="width: 100px;" @click="add_node(1)">添加左节点</button>
+                        <button style="width: 100px;" @click="add_node(0)">添加右节点</button>
+                    </div>
+                    <!--删除结点操作-->
+                    <div id="remove">
+                        <span>删除结点</span>
+                        <input type="text" placeholder="请输入结点的名称" required="required" v-model="del_node_name">
+                        <button @click="remove_node()">删除</button>
+                    </div>
+                </div>
+                <div class="traver_tree" v-if="act===1">
+                    <div>
+                        <span>遍历</span>
+                        <button @click="pre_order()">先序遍历树</button>
+                        <button @click="in_order()">中序遍历树</button>
+                        <button @click="post_order()">后序遍历树</button>
+                    </div>
+                    <div v-if="if_show===1">
+                        <span>遍历结果</span>
+                        <div  class="result-box">
+                            <div v-for="item in show_list" :key="item" class="result-item">
+                                <span>{{ item }},</span>
+                            </div>
+                        </div>
+                        <button @click="close()">关闭结果</button>
+                    </div>
+                    <div>
+                        <span>线索树</span>
+                        <button @click="pre_thread()">查看先序线索树</button>
+                        <button @click="in_thread()">查看中序线索树</button>
+                        <button @click="post_thread()">查看后序线索树</button>
+                        <button @click="update_map()">关闭线索</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 右侧地图区域  -->
+        <section class="right_area">
+            <svg id="tree"></svg>
+        </section>
+    </div>
+    <section id="tab">
+        <ul class="tab_bar">
+            <li class="centered-buttons">
+                <button @click="big()"> size+</button>
+                <button @click="small()"> size-</button>
+                <button @click="clear()"> clear</button>
+                <button @click="init()"> init</button>
+            </li>
+        </ul>
+    </section>
+
+    <script src="js/const.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/d3tools.js"></script>
+    <script src="js/functions.js"></script>
+</body>
+
+</html>
