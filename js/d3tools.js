@@ -118,6 +118,7 @@ function draw_name(node_v) {
 
 function init() {
     clear_map();
+    tree.add_root();
     draw_node('#');
     draw_name("#");
 }
